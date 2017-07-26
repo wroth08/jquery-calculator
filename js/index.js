@@ -6,30 +6,38 @@ $( "span" ).bind("click", function ( event ) {
 // Add any numbers pressed to expression variable
   if ( $(event.target).is('#clear') === false && $(event.target).is('#equals') === false) {
     if ( $(event.target).hasClass("operator") === false ) {
+      if ($("#screen").text() === "Error") {
+        $( "#screen" ).empty();
+      }
       var clone = $( event.target ).clone();
       clone.appendTo( $( "#screen" )  );
       expression += $(event.target).text().toString();
       console.log(expression);
     }
 
+// Don't allow two operators to be used in a row or start with an operator
+  else if ($( "#screen").children().length === 0) {
+    $("#screen").append("Error");
+    expression = '';
+  }
+
 //  Add the + or - operators pressed to expression
     else if ($(event.target).text() === "+" || $(event.target).text() === "-" ) {
-      var clone = $( event.target).clone();
-      clone.appendTo( $("#screen") );
+      $( "#screen" ).empty();
       expression += $(event.target).text().toString();
     }
 
 
 // Add * operator if pressed to expression
     else if ( $(event.target).text().toString() === 'x') {
+      $( "#screen" ).empty();
       expression += "*";
-      $( "#screen" ).append("x");
     }
 
 // Add / operator if pressed to expression
     else if ($(event.target).text().toString() === '÷') {
+      $( "#screen" ).empty();
       expression += "/";
-      $( "#screen" ).append("÷");
     }
   }
 
